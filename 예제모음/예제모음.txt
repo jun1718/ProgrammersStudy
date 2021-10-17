@@ -1213,3 +1213,342 @@ class Solution {
         return answer+bridge_length;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+21.10.17_3회차
+===============================================================================
+*stack(주식), heap(맵게)
+===============================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################################################################################################
+예제9) 스택 & loop문
+	
+
+1)주식가격
+초 단위로 기록된 주식가격이 담긴 배열 prices가 매개변수로 주어질 때, 가격이 떨어지지 않은 기간은 몇 초인지를 return 하도록 solution 함수를 완성하세요.
+
+제한사항
+prices의 각 가격은 1 이상 10,000 이하인 자연수입니다.
+prices의 길이는 2 이상 100,000 이하입니다.
+입출력 예
+prices	return
+[1, 2, 3, 2, 3]	[4, 3, 1, 1, 0]
+입출력 예 설명
+1초 시점의 ₩1은 끝까지 가격이 떨어지지 않았습니다.
+2초 시점의 ₩2은 끝까지 가격이 떨어지지 않았습니다.
+3초 시점의 ₩3은 1초뒤에 가격이 떨어집니다. 따라서 1초간 가격이 떨어지지 않은 것으로 봅니다.
+4초 시점의 ₩2은 1초간 가격이 떨어지지 않았습니다.
+5초 시점의 ₩3은 0초간 가격이 떨어지지 않았습니다.
+※ 공지 - 2019년 2월 28일 지문이 리뉴얼되었습니다.
+################################################################################################################
+
+
+
+
+
+
+loop문 답:
+
+import java.util.*;
+class Solution {
+    public int[] solution(int[] prices) {
+        
+        int len = prices.length; 
+        int[] answer = new int[len];
+        
+        for(int i=0;i<len-1;i++) {
+        	for(int j=i+1;j<len;j++) {
+        		answer[i]++;
+        		if(prices[i]>prices[j]) {
+        			break;
+        		}
+        	}
+        }
+        
+        return answer;
+    }
+}
+
+
+
+
+
+stack 답:
+
+import java.util.*;
+class Solution {
+    public int[] solution(int[] prices) {
+        
+    	int len = prices.length;
+    	int[] answer  = new int[len];
+    	
+    	Stack<Integer> stack = new Stack<>();
+    	
+    	int i=0;
+    	stack.push(i);
+    	
+    	for(i=1;i<len;i++) {
+    		
+    		while(!stack.isEmpty() && prices[stack.peek()] > prices[i]) {
+    			int idx = stack.pop();
+    			answer[idx] = i - idx; 
+    		}
+    		
+    		stack.push(i);
+    	}
+    	
+        int size  = stack.size();
+    	for(int j=0;j<size;j++) {
+    		int idx = stack.pop();
+    		answer[idx] = i - idx -1; 
+    	}
+/* 이렇게하면 size는 굳이 안만들어도됨. 위에는 정확히알고 거기까지 넣는거고 while은그냥 바닥날때까지넣는거
+        while (!beginIdxs.empty()) {
+            int beginIdx = beginIdxs.pop();
+            terms[beginIdx] = i - beginIdx - 1;
+        }
+*/        
+        return answer;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################################################################################################
+예제10) heap(우선 큐)
+	
+
+1)더 맵게
+매운 것을 좋아하는 Leo는 모든 음식의 스코빌 지수를 K 이상으로 만들고 싶습니다. 모든 음식의 스코빌 지수를 K 이상으로 만들기 위해 Leo는 스코빌 지수가 가장 낮은 두 개의 음식을 아래와 같이 특별한 방법으로 섞어 새로운 음식을 만듭니다.
+
+섞은 음식의 스코빌 지수 = 가장 맵지 않은 음식의 스코빌 지수 + (두 번째로 맵지 않은 음식의 스코빌 지수 * 2)
+Leo는 모든 음식의 스코빌 지수가 K 이상이 될 때까지 반복하여 섞습니다.
+Leo가 가진 음식의 스코빌 지수를 담은 배열 scoville과 원하는 스코빌 지수 K가 주어질 때, 모든 음식의 스코빌 지수를 K 이상으로 만들기 위해 섞어야 하는 최소 횟수를 return 하도록 solution 함수를 작성해주세요.
+
+제한 사항
+scoville의 길이는 2 이상 1,000,000 이하입니다.
+K는 0 이상 1,000,000,000 이하입니다.
+scoville의 원소는 각각 0 이상 1,000,000 이하입니다.
+모든 음식의 스코빌 지수를 K 이상으로 만들 수 없는 경우에는 -1을 return 합니다.
+입출력 예
+scoville	K	return
+[1, 2, 3, 9, 10, 12]	7	2
+입출력 예 설명
+스코빌 지수가 1인 음식과 2인 음식을 섞으면 음식의 스코빌 지수가 아래와 같이 됩니다.
+새로운 음식의 스코빌 지수 = 1 + (2 * 2) = 5
+가진 음식의 스코빌 지수 = [5, 3, 9, 10, 12]
+
+스코빌 지수가 3인 음식과 5인 음식을 섞으면 음식의 스코빌 지수가 아래와 같이 됩니다.
+새로운 음식의 스코빌 지수 = 3 + (5 * 2) = 13
+가진 음식의 스코빌 지수 = [13, 9, 10, 12]
+
+모든 음식의 스코빌 지수가 7 이상이 되었고 이때 섞은 횟수는 2회입니다.
+################################################################################################################
+
+
+
+답:
+
+
+
+
+
+import java.util.*;
+
+class Solution {
+    public int solution(int[] scoville, int K) {
+        int answer = 0;
+        
+        
+        int len = scoville.length;
+        
+        
+        Queue<Integer> que = new PriorityQueue<>();
+        
+        
+        for(int i=0;i<len;i++) {
+        	que.offer(scoville[i]);
+        }
+        
+        while(que.peek()<K) {
+        	if(que.size()==1) return -1;
+        	
+        	que.offer(que.poll()+(que.poll()*2));
+        	answer++;
+        }
+        System.out.println(que.toString());
+        System.out.println(answer);
+        return answer;
+    }
+
+
+}
