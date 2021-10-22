@@ -1,0 +1,115 @@
+21.10.22_8회차
+===============================================================================
+*그리디_탐욕법(큰 수 만들기)
+===============================================================================
+
+
+
+
+
+
+
+################################################################################################################
+예제19)그리디_탐욕법
+
+1)큰 수 만들기
+어떤 숫자에서 k개의 수를 제거했을 때 얻을 수 있는 가장 큰 숫자를 구하려 합니다.
+
+예를 들어, 숫자 1924에서 수 두 개를 제거하면 [19, 12, 14, 92, 94, 24] 를 만들 수 있습니다. 이 중 가장 큰 숫자는 94 입니다.
+
+문자열 형식으로 숫자 number와 제거할 수의 개수 k가 solution 함수의 매개변수로 주어집니다. number에서 k 개의 수를 제거했을 때 만들 수 있는 수 중 가장 큰 숫자를 문자열 형태로 return 하도록 solution 함수를 완성하세요.
+
+제한 조건
+number는 1자리 이상, 1,000,000자리 이하인 숫자입니다.
+k는 1 이상 number의 자릿수 미만인 자연수입니다.
+입출력 예
+number	k	return
+"1924"	2	"94"
+"1231234"	3	"3234"
+"4177252841"	4	"775841"
+출처
+################################################################################################################
+
+
+답:
+
+stack의 LIFO를 이용한 방식의 답:
+import java.util.Stack;
+
+class Solution {
+    public String solution(String number, int k) {
+        
+    	char[] result = new char[number.length()-k];
+        
+        String answer = "";
+        
+        Stack<Character> stack = new Stack<>();
+        
+        for(int i=0;i<number.length();i++) {
+        	
+        	while(!stack.isEmpty()&&stack.peek()<number.charAt(i)&&k-->0) {
+        		stack.pop();
+        	}
+        	
+        	stack.push(number.charAt(i));
+        }
+        
+//        System.out.println("stack 갯수 : "+stack.size());
+//        System.out.println("stack 원소 : " + stack.toString());
+//        System.out.println(number.length()-k);
+//        System.out.println(number.length());
+//        System.out.println(k);
+//        System.out.println();
+//        System.out.println("result 갯수 : "+result.length);
+//        
+        
+      
+        for(int i=0;i<result.length;i++) {
+        	result[i] = stack.get(i);
+        }
+        
+        answer = new String(result);
+        
+        return answer;
+    }
+}
+
+//테스트 9 〉	통과 (9023.40ms, 376MB)
+//테스트 10 〉	통과 (5466.03ms, 399MB)
+
+
+//테스트 9 〉	통과 (40.96ms, 98MB) 위에껀 마지막 for문에 answer += stack.get(i)한거
+							//엄청느림
+//테스트 10 〉	통과 (52.74ms, 103MB) //지금처럼 answer라는 문자열에 들어가야할 갯수만안다면
+	//char배열로 받아서 그걸 string에 넣는 전통적인 방식을 택하는게 좋음
+
+
+
+
+
+
+
+StringBuilder를 이용한 시간단축답(안좋은방식):
+
+class Solution {
+    public StringBuilder solution(String number, int k) {
+        
+        
+        StringBuilder answer = new StringBuilder();
+        
+        int len = number.length()-k;
+        int idx = 0;
+        for(int i=0;i<len;i++) {
+        	char max = '0';
+        	for(int j=idx;j<=k+i;j++) {
+        		if(max<number.charAt(j)) {
+        			max = number.charAt(j);
+        			idx = j+1;
+        		}
+        	}
+        	answer.append(max);
+        }
+        
+        return answer;
+    }
+}
