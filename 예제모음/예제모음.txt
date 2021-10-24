@@ -15,6 +15,21 @@
 
 1)함수 solution은 정수 n을 매개변수로 입력받습니다. n의 각 자릿수를 큰것부터 작은 순으로 정렬한 새로운 정수를 리턴해주세요. 
 	예를들어 n이 118372면 873211을 리턴하면 됩니다.
+
+
+
+import java.util.Arrays;
+
+class Solution {
+    public long solution(long n) {
+        long answer = 0;
+
+        return answer;
+    }
+}
+
+https://programmers.co.kr/learn/courses/30/lessons/12933
+
 ################################################################################################################
 
 답:
@@ -47,6 +62,29 @@ class Solution {
         return answer;
     }
 }
+
+
+
+
+
+import java.util.Arrays;
+class Solution {
+    public long solution(long n) {
+        long answer = 0;
+        String i = String.valueOf(n);
+        char[] sol = i.toCharArray();
+        Arrays.sort(sol);
+        i =  new StringBuilder(new String(sol)).reverse().toString();
+        answer = Long.parseLong(i);
+        
+        return answer;
+    }
+}
+ 
+
+
+
+
 
 
 
@@ -113,6 +151,17 @@ lottos	win_nums	result
 
 실제로 사용되는 로또 순위의 결정 방식과는 약간 다르지만, 이 문제에서는 지문에 명시된 대로 로또 순위를 결정하도록 합니다.  ↩
 
+
+
+class Solution {
+    public int[] solution(int[] lottos, int[] win_nums) {
+        int[] answer = {};
+        return answer;
+    }
+}
+
+
+https://programmers.co.kr/learn/courses/30/lessons/77484
 ################################################################################################################
 
 
@@ -163,8 +212,59 @@ class Solution {
 
 
 
-내 답:
+내 답1(복습시 생각해낸 howCount최소연산):
 
+
+import java.util.*;
+
+class Solution {
+    public int[] solution(int[] lottos, int[] win_nums) {
+        int[] answer = {};
+        
+        int factCount = 0;
+        int howCount = 0;
+        
+        Arrays.sort(lottos);
+        
+        while(howCount<6&&lottos[howCount]==0) {
+        	howCount++;
+        }
+        if(howCount==6) return new int[]{1,6};
+        
+        Map<Integer, Boolean> hm = new HashMap<>();
+        
+        for(int i=0;i<6;i++) {
+        	hm.put(lottos[i], false);
+        }
+        
+        for(int i=0;i<6;i++) {
+        	if(hm.containsKey(win_nums[i])) {
+        		factCount++;
+        	};
+        }
+        
+        
+        int maxLank = 7-(factCount+howCount);
+        int minLank = 7-factCount;
+        
+        if(maxLank == 7) maxLank = 6; 
+        if(minLank == 7) minLank = 6; 
+        		
+        answer = new int[2];
+        answer[0] = maxLank;
+        answer[1] = minLank;
+        
+        return answer;
+    }
+}
+
+
+
+
+
+
+
+내 답2(제일처음 헛수고한답):
 
 import java.util.Arrays;
 
@@ -449,7 +549,7 @@ public class MainClass {
 
 21.10.16_2회차
 ===============================================================================
-*hash, stack, queue(한문제남음)
+*hash, stack, queue
 ===============================================================================
 
 
@@ -568,6 +668,18 @@ participant	completion	return
 "mislav"는 참여자 명단에는 두 명이 있지만, 완주자 명단에는 한 명밖에 없기 때문에 한명은 완주하지 못했습니다.
 
 출처
+
+
+
+class Solution {
+    public String solution(String[] participant, String[] completion) {
+        String answer = "";
+        return answer;
+    }
+}
+
+
+https://programmers.co.kr/learn/courses/30/lessons/42576
 ################################################################################################################
 
 
@@ -678,6 +790,17 @@ phone_book	return
 입출력 예 #3
 첫 번째 전화번호, “12”가 두 번째 전화번호 “123”의 접두사입니다. 따라서 답은 false입니다.
 
+
+
+class Solution {
+    public boolean solution(String[] phone_book) {
+        boolean answer = true;
+        return answer;
+    }
+}
+
+
+https://programmers.co.kr/learn/courses/30/lessons/42577
 ################################################################################################################
 
 
@@ -812,6 +935,19 @@ face에 해당하는 의상이 crow_mask, blue_sunglasses, smoky_makeup이므로
 2. blue_sunglasses
 3. smoky_makeup
 
+
+
+
+
+class Solution {
+    public int solution(String[][] clothes) {
+        int answer = 0;
+        return answer;
+    }
+}
+
+
+https://programmers.co.kr/learn/courses/30/lessons/42578
 ################################################################################################################
 
 
@@ -935,6 +1071,16 @@ progresses	speeds	return
 
 ※ 공지 - 2020년 7월 14일 테스트케이스가 추가되었습니다.
 
+
+class Solution {
+    public int[] solution(int[] progresses, int[] speeds) {
+        int[] answer = {};
+        return answer;
+    }
+}
+
+
+https://programmers.co.kr/learn/courses/30/lessons/42586
 ################################################################################################################
 
 
@@ -1048,6 +1194,17 @@ priorities	location	return
 6개의 문서(A, B, C, D, E, F)가 인쇄 대기목록에 있고 중요도가 1 1 9 1 1 1 이므로 C D E F A B 순으로 인쇄합니다.
 
 출처
+
+
+class Solution {
+    public int solution(int[] priorities, int location) {
+        int answer = 0;
+        return answer;
+    }
+}
+
+
+https://programmers.co.kr/learn/courses/30/lessons/42587
 ################################################################################################################
 
 
@@ -1155,6 +1312,17 @@ bridge_length	weight	truck_weights	return
 ※ 공지 - 2020년 4월 06일 테스트케이스가 추가되었습니다.
 
 
+
+class Solution {
+    public int solution(int bridge_length, int weight, int[] truck_weights) {
+        int answer = 0;
+        return answer;
+    }
+}
+
+
+
+https://programmers.co.kr/learn/courses/30/lessons/42583
 ################################################################################################################
 
 
@@ -1388,6 +1556,18 @@ prices	return
 4초 시점의 ₩2은 1초간 가격이 떨어지지 않았습니다.
 5초 시점의 ₩3은 0초간 가격이 떨어지지 않았습니다.
 ※ 공지 - 2019년 2월 28일 지문이 리뉴얼되었습니다.
+
+
+class Solution {
+    public int[] solution(int[] prices) {
+        int[] answer = {};
+        return answer;
+    }
+}
+
+
+
+https://programmers.co.kr/learn/courses/30/lessons/42584
 ################################################################################################################
 
 
@@ -1512,6 +1692,18 @@ scoville	K	return
 가진 음식의 스코빌 지수 = [13, 9, 10, 12]
 
 모든 음식의 스코빌 지수가 7 이상이 되었고 이때 섞은 횟수는 2회입니다.
+
+
+
+class Solution {
+    public int solution(int[] scoville, int K) {
+        int answer = 0;
+        return answer;
+    }
+}
+
+
+https://programmers.co.kr/learn/courses/30/lessons/42626
 ################################################################################################################
 
 
