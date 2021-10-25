@@ -1864,6 +1864,17 @@ array	commands	return
 [1, 5, 2, 6, 3, 7, 4]를 1번째부터 7번째까지 자릅니다. [1, 2, 3, 4, 5, 6, 7]의 세 번째 숫자는 3입니다.
 
 출처
+
+
+class Solution {
+    public int[] solution(int[] array, int[][] commands) {
+        int[] answer = {};
+        return answer;
+    }
+}
+
+
+https://programmers.co.kr/learn/courses/30/lessons/42748
 ################################################################################################################
 
 
@@ -1949,6 +1960,15 @@ numbers	return
 [6, 10, 2]	"6210"
 [3, 30, 34, 5, 9]	"9534330" 
 	
+class Solution {
+    public String solution(int[] numbers) {
+        String answer = "";
+        return answer;
+    }
+}
+
+
+https://programmers.co.kr/learn/courses/30/lessons/42746
 ################################################################################################################
 
 
@@ -2124,7 +2144,16 @@ citations	return
 
 ※ 공지 - 2019년 2월 28일 테스트 케이스가 추가되었습니다.
 
+class Solution {
+    public int solution(int[] citations) {
+        int answer = 0;
+        return answer;
+    }
+}
 
+
+
+https://programmers.co.kr/learn/courses/30/lessons/42747
 ################################################################################################################
 
 
@@ -2196,6 +2225,16 @@ answers	return
 입출력 예 #2
 
 모든 사람이 2문제씩을 맞췄습니다.
+
+class Solution {
+    public int[] solution(int[] answers) {
+        int[] answer = {};
+        return answer;
+    }
+}
+
+
+https://programmers.co.kr/learn/courses/30/lessons/42840
 ################################################################################################################
 
 
@@ -2284,6 +2323,21 @@ numbers	return
 
 11과 011은 같은 숫자로 취급합니다.
 출처
+
+
+
+
+
+class Solution {
+    public int solution(String numbers) {
+        int answer = 0;
+        return answer;
+    }
+}
+
+
+
+https://programmers.co.kr/learn/courses/30/lessons/42839
 ################################################################################################################
 
 
