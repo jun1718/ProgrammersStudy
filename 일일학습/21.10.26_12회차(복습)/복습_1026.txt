@@ -1,0 +1,463 @@
+21.10.26_12회차
+===============================================================================
+*복습
+===============================================================================
+
+
+
+
+
+
+
+
+
+################################################################################################################
+예제16)완전탐색
+
+1)카펫
+
+Leo는 카펫을 사러 갔다가 아래 그림과 같이 중앙에는 노란색으로 칠해져 있고 테두리 1줄은 갈색으로 칠해져 있는 격자 모양 카펫을 봤습니다.
+
+carpet.png
+
+Leo는 집으로 돌아와서 아까 본 카펫의 노란색과 갈색으로 색칠된 격자의 개수는 기억했지만, 전체 카펫의 크기는 기억하지 못했습니다.
+
+Leo가 본 카펫에서 갈색 격자의 수 brown, 노란색 격자의 수 yellow가 매개변수로 주어질 때 카펫의 가로, 세로 크기를 순서대로 배열에 담아 return 하도록 solution 함수를 작성해주세요.
+
+제한사항
+갈색 격자의 수 brown은 8 이상 5,000 이하인 자연수입니다.
+노란색 격자의 수 yellow는 1 이상 2,000,000 이하인 자연수입니다.
+카펫의 가로 길이는 세로 길이와 같거나, 세로 길이보다 깁니다.
+입출력 예
+brown	yellow	return
+10	2	[4, 3]
+8	1	[3, 3]
+24	24	[8, 6]
+출처
+
+※ 공지 - 2020년 2월 3일 테스트케이스가 추가되었습니다.
+※ 공지 - 2020년 5월 11일 웹접근성을 고려하여 빨간색을 노란색으로 수정하였습니다.
+
+class Solution {
+    public int[] solution(int brown, int yellow) {
+        int[] answer = new int[2];
+        int sum = brown+yellow;
+        
+        int hori = 0;
+        int verti = 0;
+        
+        
+        
+        for(int i=3;i<sum;i++) {
+        	if(sum%i==0) {
+        		verti = i;
+        		hori = sum/i;
+        	   	if((hori-2) * (verti-2) == yellow) {
+            		answer[0] = hori;
+            		answer[1] = verti;
+            		break;
+            	}
+        	}        	
+        	
+     
+        }
+        
+        
+        return answer;
+    }
+}
+################################################################################################################
+
+
+
+내가 수정한답:
+class Solution {
+    public int[] solution(int brown, int yellow) {
+  
+        int sum = brown + yellow;
+        for(int i=3;i<=sum;i++) {
+        	
+        	if(sum%i==0) {        		
+        		int col = sum/i;
+        		int row = i; //i가 약수임이 증명이 된이상 sum에서 i로 나누면 약수의 쌍에서 큰값이 몫이되고 나눈 i값이 자동으로 남은 작은 값이 됨
+        		
+        		if((col-2)*(row-2) == yellow){ // 위처럼 값을넣으면 약수의 쌍에서 큰값이 가로로 들어가고 작은값이 세로로들어감 물론 세로가 커지는 경우도 나중엔 나오지만 그전에 끝나기때문에
+								//아래처럼 col>=row를 해줄필요가 없음
+        			return new int[] {col, row}; 
+        		}
+        	}
+        	
+        }
+        
+         return new int[0]; //사실상 의미가 없는거임 if외에 return을 넣어줘야하기때문에 필요할뿐
+    }
+}
+
+
+
+
+다른사람 답:
+class Solution {
+    public int[] solution(int brown, int yellow) {
+        int[] answer = {};
+        int sum = brown + yellow;
+        for(int i=3;i<=sum;i++) {
+        	
+        	if(sum%i==0) {        		
+        		int col = sum/i;
+        		int row = sum/col;
+        		
+        		if((col-2)*(row-2) == yellow && col>=row){
+        			return new int[] {col, row}; 
+        		}
+        	}
+        	
+        }
+        
+        return answer;
+    }
+}
+
+
+
+
+
+
+
+
+
+################################################################################################################
+예제17)그리디_탐욕법
+
+1)체육복
+
+점심시간에 도둑이 들어, 일부 학생이 체육복을 도난당했습니다. 다행히 여벌 체육복이 있는 학생이 이들에게 체육복을 빌려주려 합니다. 
+학생들의 번호는 체격 순으로 매겨져 있어, 바로 앞번호의 학생이나 바로 뒷번호의 학생에게만 체육복을 빌려줄 수 있습니다. 예를 들어, 
+4번 학생은 3번 학생이나 5번 학생에게만 체육복을 빌려줄 수 있습니다. 체육복이 없으면 수업을 들을 수 없기 때문에 체육복을 적절히 빌려 최대한 많은 학생이 체육수업을 들어야 합니다.
+
+전체 학생의 수 n, 체육복을 도난당한 학생들의 번호가 담긴 배열 lost, 여벌의 체육복을 가져온 학생들의 번호가 담긴 배열 reserve가 매개변수로 주어질 때, 
+체육수업을 들을 수 있는 학생의 최댓값을 return 하도록 solution 함수를 작성해주세요.
+
+제한사항
+전체 학생의 수는 2명 이상 30명 이하입니다.
+체육복을 도난당한 학생의 수는 1명 이상 n명 이하이고 중복되는 번호는 없습니다.
+여벌의 체육복을 가져온 학생의 수는 1명 이상 n명 이하이고 중복되는 번호는 없습니다.
+여벌 체육복이 있는 학생만 다른 학생에게 체육복을 빌려줄 수 있습니다.
+여벌 체육복을 가져온 학생이 체육복을 도난당했을 수 있습니다. 이때 이 학생은 체육복을 하나만 도난당했다고 가정하며, 남은 체육복이 하나이기에 다른 학생에게는 체육복을 빌려줄 수 없습니다.
+입출력 예
+n	lost	reserve	return
+5	[2, 4]	[1, 3, 5]	5
+5	[2, 4]	[3]	4
+3	[3]	[1]	2
+입출력 예 설명
+예제 #1
+1번 학생이 2번 학생에게 체육복을 빌려주고, 3번 학생이나 5번 학생이 4번 학생에게 체육복을 빌려주면 학생 5명이 체육수업을 들을 수 있습니다.
+
+예제 #2
+3번 학생이 2번 학생이나 4번 학생에게 체육복을 빌려주면 학생 4명이 체육수업을 들을 수 있습니다.
+
+출처
+
+※ 공지 - 2019년 2월 18일 지문이 리뉴얼되었습니다.
+※ 공지 - 2019년 2월 27일, 28일 테스트케이스가 추가되었습니다.
+※ 공지 - 2021년 7월 28일 테스트케이스가 추가되었습니다.
+※ 공지 - 2021년 8월 30일 테스트케이스가 추가되었습니다.
+
+
+import java.util.*;
+
+class Solution {
+    public int solution(int n, int[] lost, int[] reserve) {
+    	int len = lost.length;
+        int answer = n-len;
+        
+        Arrays.sort(lost);
+        
+        
+       System.out.println(Arrays.toString(lost));
+       System.out.println(Arrays.toString(reserve));
+        Map<Integer, Boolean> hm = new HashMap<>();
+        for(int i=0;i<reserve.length;i++) {
+        	System.out.println(reserve[i]);
+        	hm.put(reserve[i], true);
+        }
+        
+        System.out.println(hm.toString());
+        for(int i=0;i<len;i++) {
+        	if(hm.containsKey(lost[i])) {
+        		answer++;
+        		hm.put(lost[i], false);
+        		lost[i] = -1;
+        	}
+        }
+        System.out.println(hm.toString());
+        
+        for(int i=0;i<len;i++) {
+        	System.out.println("dfjoiewjfiowe "+(lost[i]-1));
+        	System.out.println("dfjoiewjfiowe "+(lost[i]+1));
+        	if(hm.containsKey(lost[i]-1)) {
+        		if(hm.get(lost[i]-1)) {
+        			answer++;
+        			System.out.println(answer+"1번");
+        			hm.put(lost[i]-1, false);
+        			System.out.println(hm.toString()+" 1번");
+        			continue;
+        		}
+        	} 
+        	
+        	if(hm.containsKey(lost[i]+1)) {
+        		if(hm.get(lost[i]+1)) {
+        			answer++;
+        			System.out.print(lost[i]);
+        			System.out.println(answer+" 2번");
+        			System.out.println(hm.toString()+" 2번");
+        			hm.put(lost[i]+1, false);
+        			System.out.println(hm.toString()+" 2번");
+        			continue;
+        		}
+        	}
+        	
+        }
+        
+        System.out.println(answer);
+        
+        return answer;
+    }
+}
+################################################################################################################
+
+
+
+
+
+답:
+
+
+
+
+import java.util.*;
+
+class Solution {
+    public int solution(int n, int[] lost, int[] reserve) {
+        int answer = n - lost.length;
+        
+
+        
+        Map<Integer, Boolean> hmR = new HashMap<>();
+        Arrays.sort(lost);//여기서 정렬안하면 
+        //1은 2가져가고 3은 4가져가면 딱인데 이러면 3이 먼저 2가져가서
+        //1은 못가져가게되는 경우가 생김 그래서 정렬해서 각자
+        //앞에서부터 가져가는 상황을 만들어야함
+        //lost:3,1,6 reserve:2,4
+        
+        for(int i=0;i<reserve.length;i++) {
+        	hmR.put(reserve[i], true);
+        }
+        
+        for(int i=0;i<lost.length;i++) {
+        	if(hmR.containsKey(lost[i])) {
+        		hmR.put(lost[i], false);
+        		lost[i] = -1; //밑에랑 다르게 여긴해야함
+                        //2번학생이 잃어버리고 여분도있다했을때
+                //2번 학생의 여분은 false가 되고 2번 학생의
+                //값을 유의미하게 2 그대로 나두면 아래에서 2번이 1번은false
+                //라서 못가져가고 3번을 가져감 그럼 4번학생이 
+                //3번학생한테 빌려야하는데 못빌림 즉 2번이 혼자
+                //2개를 빌리는것과 같음
+                //lost:2,4 reserve:1,3이라가정
+        		answer++;
+        	}
+        }
+        
+        for(int i=0;i<lost.length;i++) {
+        	for(int num : hmR.keySet()) {
+        		if(lost[i]-1 == num) {
+        			if(hmR.get(num)) {     
+        				hmR.put(num, false);
+                        //lost[i] = -1; 여긴할필요없음 밑에 주석도마찬가지
+        				answer++;
+        				break;
+        			}
+        		} else if(lost[i]+1 == num) {
+        			if(hmR.get(num)) {     
+        				hmR.put(num, false);
+                        //lost[i] = -1;
+        				answer++;
+        				break;
+        			}        			
+        		} 
+        	}
+        }
+        
+        return answer;
+    }
+}
+
+
+
+
+
+
+import java.util.*;
+
+class Solution {
+    public int solution(int n, int[] lost, int[] reserve) {
+    	int len = lost.length;
+        int answer = n-len;
+        
+        Arrays.sort(lost);
+        
+       System.out.println(Arrays.toString(lost));
+       System.out.println(Arrays.toString(reserve));
+        Map<Integer, Boolean> hm = new HashMap<>();
+        for(int i=0;i<reserve.length;i++) {
+        	hm.put(reserve[i], true);
+        }
+        
+        for(int i=0;i<len;i++) {
+        	if(hm.containsKey(lost[i])) {
+        		answer++;
+        		lost[i] = -1;
+        		hm.put(lost[i], false);
+        	}
+        }
+        
+        
+        for(int i=0;i<len;i++) {
+        	if(hm.containsKey(lost[i]-1)) {
+        		if(hm.get(lost[i]-1)) {
+        			answer++;
+        			System.out.println(answer+"1번");
+        			hm.put(lost[i]-1, false);
+        		}
+        	} else if(hm.containsKey(lost[i]+1)) {
+        		if(hm.get(lost[i]+1)) {
+        			answer++;
+        			System.out.print(lost[i]);
+        			System.out.println(answer+" 2번");
+        			hm.put(lost[i]+1, false);
+        		}
+        	}
+        	
+        }
+        
+        System.out.println(answer);
+        
+        return answer;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################################################################################################
+예제18)그리디_탐욕법
+
+1)조이스틱
+
+
+조이스틱으로 알파벳 이름을 완성하세요. 맨 처음엔 A로만 이루어져 있습니다.
+ex) 완성해야 하는 이름이 세 글자면 AAA, 네 글자면 AAAA
+
+조이스틱을 각 방향으로 움직이면 아래와 같습니다.
+
+▲ - 다음 알파벳
+▼ - 이전 알파벳 (A에서 아래쪽으로 이동하면 Z로)
+◀ - 커서를 왼쪽으로 이동 (첫 번째 위치에서 왼쪽으로 이동하면 마지막 문자에 커서)
+▶ - 커서를 오른쪽으로 이동
+예를 들어 아래의 방법으로 "JAZ"를 만들 수 있습니다.
+
+- 첫 번째 위치에서 조이스틱을 위로 9번 조작하여 J를 완성합니다.
+- 조이스틱을 왼쪽으로 1번 조작하여 커서를 마지막 문자 위치로 이동시킵니다.
+- 마지막 위치에서 조이스틱을 아래로 1번 조작하여 Z를 완성합니다.
+따라서 11번 이동시켜 "JAZ"를 만들 수 있고, 이때가 최소 이동입니다.
+만들고자 하는 이름 name이 매개변수로 주어질 때, 이름에 대해 조이스틱 조작 횟수의 최솟값을 return 하도록 solution 함수를 만드세요.
+
+제한 사항
+name은 알파벳 대문자로만 이루어져 있습니다.
+name의 길이는 1 이상 20 이하입니다.
+입출력 예
+name	return
+"JEROEN"	56
+"JAN"	23
+출처
+
+※ 공지 - 2019년 2월 28일 테스트케이스가 추가되었습니다.
+
+
+class Solution {
+    public int solution(String name) {
+        int answer = 0;
+        int len = name.length();
+        int minLen = len -1;
+        
+        for(int i=0;i<len;i++) {    
+        	answer += Math.min(name.charAt(i)-'A', 'Z'-name.charAt(i)+1);
+        	int nextIdx = i+1;
+        	while(nextIdx <= minLen && name.charAt(nextIdx) == 'A') {
+        		nextIdx++;
+        	}
+        	minLen = Math.min(i*2+(len-nextIdx), minLen);
+        }
+        
+        answer += minLen;
+        return answer;
+    }
+}
+################################################################################################################
+
+
+답:
+
+
+class Solution {
+    public int solution(String name) {
+        int answer = 0;
+        
+        
+       int len = name.length();
+       
+       int minLen = len -1; 
+       
+       for(int i=0;i<len;i++) {
+    	   
+    	   answer += Math.min(name.charAt(i)-'A', 'Z'-name.charAt(i)+1);
+    	   
+    	   int nextIdx = i+1;
+    	   
+    	   while(nextIdx<len&&name.charAt(nextIdx)=='A') {
+    		   nextIdx++;
+    	   }
+    	   
+    	   minLen = Math.min(minLen, i*2+1+(len-1-nextIdx));
+    	   //이걸 간단하게하면 Math.min(minLen, i*2+(len-nextIdx));
+
+		//위코드가 적혀야하는 이유 케이스: BBAAABB 
+       }
+   
+        answer += minLen;
+
+        return answer;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+

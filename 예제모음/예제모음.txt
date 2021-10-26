@@ -2520,7 +2520,14 @@ brown	yellow	return
 ※ 공지 - 2020년 2월 3일 테스트케이스가 추가되었습니다.
 ※ 공지 - 2020년 5월 11일 웹접근성을 고려하여 빨간색을 노란색으로 수정하였습니다.
 
+class Solution {
+    public int[] solution(int brown, int yellow) {
+        int[] answer = {};
+        return answer;
+    }
+}
 
+https://programmers.co.kr/learn/courses/30/lessons/42842
 ################################################################################################################
 
 
@@ -2641,13 +2648,21 @@ n	lost	reserve	return
 ※ 공지 - 2021년 7월 28일 테스트케이스가 추가되었습니다.
 ※ 공지 - 2021년 8월 30일 테스트케이스가 추가되었습니다.
 
+class Solution {
+    public int solution(int n, int[] lost, int[] reserve) {
+        int answer = 0;
+        return answer;
+    }
+}
+
+https://programmers.co.kr/learn/courses/30/lessons/42862
 ################################################################################################################
 
 
 
 
 
-답:
+최초 답:
 
 
 
@@ -2713,7 +2728,52 @@ class Solution {
 
 
 
+복습하면서 생각한 답(이중포문사용하지 않는다, 해쉬를 극한으로 사용):
 
+import java.util.*;
+
+class Solution {
+    public int solution(int n, int[] lost, int[] reserve) {
+    	int len = lost.length;
+        int answer = n-len;
+        
+        Arrays.sort(lost);
+        Map<Integer, Boolean> hm = new HashMap<>();
+        for(int i=0;i<reserve.length;i++) {
+        	hm.put(reserve[i], true);
+        }
+        
+        for(int i=0;i<len;i++) {
+        	if(hm.containsKey(lost[i])) {
+        		answer++;
+        		hm.put(lost[i], false);
+                	lost[i] = -1;
+        	}
+        }
+        
+        for(int i=0;i<len;i++) {
+        	if(hm.containsKey(lost[i]-1)) {
+        		if(hm.get(lost[i]-1)) {
+        			answer++;
+        			hm.put(lost[i]-1, false);
+        			continue;
+        		}
+        	} 
+        	
+        	if(hm.containsKey(lost[i]+1)) {
+        		if(hm.get(lost[i]+1)) {
+        			answer++;
+        			hm.put(lost[i]+1, false);
+        			continue;
+        		}
+        	}
+        	
+        }
+        
+        
+        return answer;
+    }
+}
 
 
 
@@ -2879,6 +2939,16 @@ name	return
 
 
 
+class Solution {
+    public int solution(String name) {
+        int answer = 0;
+        return answer;
+    }
+}
+
+
+
+https://programmers.co.kr/learn/courses/30/lessons/42860
 ################################################################################################################
 
 
