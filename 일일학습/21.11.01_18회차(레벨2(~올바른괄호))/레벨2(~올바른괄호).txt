@@ -1,0 +1,770 @@
+21.11.01_18회차
+===============================================================================
+*레벨2(~올바른괄호)
+===============================================================================
+
+
+
+
+
+#########################################################################################
+예제56)연습문제
+
+1)행렬의 곱셈
+2차원 행렬 arr1과 arr2를 입력받아, arr1에 arr2를 곱한 결과를 반환하는 함수, solution을 완성해주세요.
+
+제한 조건
+행렬 arr1, arr2의 행과 열의 길이는 2 이상 100 이하입니다.
+행렬 arr1, arr2의 원소는 -10 이상 20 이하인 자연수입니다.
+곱할 수 있는 배열만 주어집니다.
+입출력 예
+arr1	arr2	return
+[[1, 4], [3, 2], [4, 1]]	[[3, 3], [3, 3]]	[[15, 15], [15, 15], [15, 15]]
+[[2, 3, 2], [4, 2, 4], [3, 1, 4]]	[[5, 4, 3], [2, 4, 1], [3, 1, 1]]	[[22, 22, 11], [36, 28, 18], [29, 20, 14]]
+
+
+class Solution {
+    public int[][] solution(int[][] arr1, int[][] arr2) {
+        int[][] answer = {};
+        return answer;
+    }
+}
+
+	2 3 2       22 22 11
+        4 2 4       36 28 18
+        3 1 4       29 20 14
+             
+        5 4 3	10	8 9  
+        2 4 1	12	8 1
+        3 1 1	6	4 4
+
+
+	1 4
+ 	3 2
+	4 1
+
+	3 3 
+	3 3 
+
+
+
+
+	        arr[0][0] * arr2[0][0];
+                arr[0][1] * arr2[1][0];
+	        arr[0][0] * arr2[0][1];
+                arr[0][1] * arr2[1][1];
+                
+                arr[1][0] * arr2[0][1];
+                arr[1][1] * arr2[1][1];
+                
+                arr[2][0] * arr2[0][2];
+                arr[2][1] * arr2[1][2];
+
+https://programmers.co.kr/learn/courses/30/lessons/12949
+#########################################################################################
+
+
+
+답:
+
+
+import java.util.*;
+
+class Solution {
+    public int[][] solution(int[][] arr1, int[][] arr2) {
+        int[][] answer = new int[arr1.length][arr2[0].length];
+        
+        
+        for(int i=0;i<arr1.length;i++) {
+        	for(int j=0;j<arr1[0].length;j++) {
+        		for(int k=0;k<arr2[0].length;k++) {
+        			answer[i][k] += arr1[i][j]*arr2[j][k];
+        			
+        			
+        			
+        		}
+        	}
+        }
+        
+        return answer;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################################
+예제57)연습문제
+
+1)피보나치 수
+피보나치 수는 F(0) = 0, F(1) = 1일 때, 1 이상의 n에 대하여 F(n) = F(n-1) + F(n-2) 가 적용되는 수 입니다.
+
+예를들어
+
+F(2) = F(0) + F(1) = 0 + 1 = 1
+F(3) = F(1) + F(2) = 1 + 1 = 2
+F(4) = F(2) + F(3) = 1 + 2 = 3
+F(5) = F(3) + F(4) = 2 + 3 = 5
+와 같이 이어집니다.
+
+2 이상의 n이 입력되었을 때, n번째 피보나치 수를 1234567으로 나눈 나머지를 리턴하는 함수, solution을 완성해 주세요.
+
+제한 사항
+n은 2 이상 100,000 이하인 자연수입니다.
+입출력 예
+n	return
+3	2
+5	5
+입출력 예 설명
+피보나치수는 0번째부터 0, 1, 1, 2, 3, 5, ... 와 같이 이어집니다.
+
+class Solution {
+    public int solution(int n) {
+        int answer = 0;
+        return answer;
+    }
+}
+
+
+https://programmers.co.kr/learn/courses/30/lessons/12945
+#########################################################################################
+
+
+
+
+답:
+
+
+class Solution {
+ 
+	
+    public int solution(int n) {
+        int answer = 0;
+        
+        int[] tmp = new int[n+1];
+        
+        
+        tmp[0] = 0;
+        tmp[1] = 1;
+        
+        for(int i=2;i<=n;i++) {
+        	tmp[i] = (tmp[i-2]+tmp[i-1]) % 1234567;
+        }
+        
+        answer = tmp[n];
+        return answer;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################################
+예제58)연습문제
+
+1)최솟값 만들기
+길이가 같은 배열 A, B 두개가 있습니다. 각 배열은 자연수로 이루어져 있습니다.
+배열 A, B에서 각각 한 개의 숫자를 뽑아 두 수를 곱합니다. 이러한 과정을 배열의 길이만큼 반복하며, 두 수를 곱한 값을 누적하여 더합니다. 이때 최종적으로 누적된 값이 최소가 되도록 만드는 것이 목표입니다. (단, 각 배열에서 k번째 숫자를 뽑았다면 다음에 k번째 숫자는 다시 뽑을 수 없습니다.)
+
+예를 들어 A = [1, 4, 2] , B = [5, 4, 4] 라면
+
+A에서 첫번째 숫자인 1, B에서 첫번째 숫자인 5를 뽑아 곱하여 더합니다. (누적된 값 : 0 + 5(1x5) = 5)
+A에서 두번째 숫자인 4, B에서 세번째 숫자인 4를 뽑아 곱하여 더합니다. (누적된 값 : 5 + 16(4x4) = 21)
+A에서 세번째 숫자인 2, B에서 두번째 숫자인 4를 뽑아 곱하여 더합니다. (누적된 값 : 21 + 8(2x4) = 29)
+즉, 이 경우가 최소가 되므로 29를 return 합니다.
+
+배열 A, B가 주어질 때 최종적으로 누적된 최솟값을 return 하는 solution 함수를 완성해 주세요.
+
+제한사항
+배열 A, B의 크기 : 1,000 이하의 자연수
+배열 A, B의 원소의 크기 : 1,000 이하의 자연수
+입출력 예
+A	B	answer
+[1, 4, 2]	[5, 4, 4]	29
+[1,2]	[3,4]	10
+입출력 예 설명
+입출력 예 #1
+문제의 예시와 같습니다.
+
+입출력 예 #2
+A에서 첫번째 숫자인 1, B에서 두번째 숫자인 4를 뽑아 곱하여 더합니다. (누적된 값 : 4) 다음, A에서 두번째 숫자인 2, B에서 첫번째 숫자인 3을 뽑아 곱하여 더합니다. (누적된 값 : 4 + 6 = 10)
+이 경우가 최소이므로 10을 return 합니다.
+
+
+
+
+class Solution
+{
+    public int solution(int []A, int []B)
+    {
+        int answer = 0;
+
+        // [실행] 버튼을 누르면 출력 값을 볼 수 있습니다.
+        System.out.println("Hello Java");
+
+        return answer;
+    }
+}
+
+
+https://programmers.co.kr/learn/courses/30/lessons/12941
+#########################################################################################
+
+
+
+
+답:
+
+
+
+import java.util.Arrays;
+
+class Solution
+{
+    public int solution(int []A, int []B)
+    {
+        int answer = 0;
+
+        Arrays.sort(A);
+        Arrays.sort(B);
+        
+        
+        for(int i=0;i<A.length;i++) {
+        	answer += A[i] * B[A.length-1-i];
+         }
+
+        
+        return answer;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################################
+예제59)연습문제
+
+1)최댓값과 최솟값
+
+문자열 s에는 공백으로 구분된 숫자들이 저장되어 있습니다. str에 나타나는 숫자 중 최소값과 최대값을 찾아 이를 "(최소값) (최대값)"형태의 문자열을 반환하는 함수, solution을 완성하세요.
+예를들어 s가 "1 2 3 4"라면 "1 4"를 리턴하고, "-1 -2 -3 -4"라면 "-4 -1"을 리턴하면 됩니다.
+
+제한 조건
+s에는 둘 이상의 정수가 공백으로 구분되어 있습니다.
+입출력 예
+s	return
+"1 2 3 4"	"1 4"
+"-1 -2 -3 -4"	"-4 -1"
+"-1 -1"	"-1 -1"
+
+
+class Solution {
+    public String solution(String s) {
+        String answer = "";
+        return answer;
+    }
+}
+
+https://programmers.co.kr/learn/courses/30/lessons/12939
+#########################################################################################
+
+
+
+
+답:
+
+
+import java.util.Arrays;
+import java.util.Collections;
+
+class Solution {
+    public String solution(String s) {
+        String answer = "";
+         
+       String[] tmp = s.split(" ");
+       int[] num = new int[tmp.length];
+       
+       for(int i=0;i<tmp.length;i++) {
+    	   num[i] = Integer.parseInt(tmp[i]);
+       }
+       
+       Arrays.sort(num);
+       
+       answer = num[0] + " " + num[tmp.length-1];
+        
+        
+        
+        return answer;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################################
+예제60)연습문제
+
+1)숫자의 표현
+Finn은 요즘 수학공부에 빠져 있습니다. 수학 공부를 하던 Finn은 자연수 n을 연속한 자연수들로 표현 하는 방법이 여러개라는 사실을 알게 되었습니다. 예를들어 15는 다음과 같이 4가지로 표현 할 수 있습니다.
+
+1 + 2 + 3 + 4 + 5 = 15
+4 + 5 + 6 = 15
+7 + 8 = 15
+15 = 15
+자연수 n이 매개변수로 주어질 때, 연속된 자연수들로 n을 표현하는 방법의 수를 return하는 solution를 완성해주세요.
+
+제한사항
+n은 10,000 이하의 자연수 입니다.
+입출력 예
+n	result
+15	4
+입출력 예 설명
+입출력 예#1
+문제의 예시와 같습니다.
+
+class Solution {
+    public int solution(int n) {
+        int answer = 0;
+        return answer;
+    }
+}
+
+
+https://programmers.co.kr/learn/courses/30/lessons/12924
+#########################################################################################
+
+
+
+
+답:
+
+
+class Solution {
+    public int solution(int n) {
+        int answer = 0;
+        int sum = 0;
+        
+        for(int i=1;i<=n/2;i++) {
+        	for(int j=i;j<=n/2+1;j++) {
+        		sum+= j;
+        		
+        		if(sum==n) {
+        			answer++;
+        			break;
+        		} else if(sum>n) {
+        			break;
+        		}
+        	}
+        	sum=0;
+        }
+        
+        answer++;
+        
+        return answer;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################################
+예제61)연습문제
+
+1)땅따먹기
+땅따먹기 게임을 하려고 합니다. 땅따먹기 게임의 땅(land)은 총 N행 4열로 이루어져 있고, 모든 칸에는 점수가 쓰여 있습니다. 1행부터 땅을 밟으며 한 행씩 내려올 때, 각 행의 4칸 중 한 칸만 밟으면서 내려와야 합니다. 단, 땅따먹기 게임에는 한 행씩 내려올 때, 같은 열을 연속해서 밟을 수 없는 특수 규칙이 있습니다.
+
+예를 들면,
+
+| 1 | 2 | 3 | 5 |
+
+| 5 | 6 | 7 | 8 |
+
+| 4 | 3 | 2 | 1 |
+
+로 땅이 주어졌다면, 1행에서 네번째 칸 (5)를 밟았으면, 2행의 네번째 칸 (8)은 밟을 수 없습니다.
+
+마지막 행까지 모두 내려왔을 때, 얻을 수 있는 점수의 최대값을 return하는 solution 함수를 완성해 주세요. 위 예의 경우, 1행의 네번째 칸 (5), 2행의 세번째 칸 (7), 3행의 첫번째 칸 (4) 땅을 밟아 16점이 최고점이 되므로 16을 return 하면 됩니다.
+
+제한사항
+행의 개수 N : 100,000 이하의 자연수
+열의 개수는 4개이고, 땅(land)은 2차원 배열로 주어집니다.
+점수 : 100 이하의 자연수
+입출력 예
+land	answer
+[[1,2,3,5],[5,6,7,8],[4,3,2,1]]	16
+입출력 예 설명
+입출력 예 #1
+문제의 예시와 같습니다.
+
+
+class Solution {
+    int solution(int[][] land) {
+        int answer = 0;
+
+        // [실행] 버튼을 누르면 출력 값을 볼 수 있습니다.
+        System.out.println("Hello Java");
+
+        return answer;
+    }
+}
+
+
+
+https://programmers.co.kr/learn/courses/30/lessons/12913
+#########################################################################################
+
+
+
+
+답:
+
+
+
+
+
+
+import java.util.*;
+
+class Solution {
+    int solution(int[][] land) {
+        int answer = 0;
+        
+        int len = land.length;
+     
+        for(int i=1;i<len;i++) {
+        	land[i][0] += Math.max(land[i-1][1], Math.max(land[i-1][2], land[i-1][3]));
+        	land[i][1] += Math.max(land[i-1][0], Math.max(land[i-1][2], land[i-1][3]));
+        	land[i][2] += Math.max(land[i-1][1], Math.max(land[i-1][0], land[i-1][3]));
+        	land[i][3] += Math.max(land[i-1][1], Math.max(land[i-1][2], land[i-1][0]));
+        }
+        
+        
+        Arrays.sort(land[len-1]);
+
+        answer = land[len-1][3];
+        
+        return answer;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################################
+예제62)연습문제
+
+1)다음 큰 숫자
+
+자연수 n이 주어졌을 때, n의 다음 큰 숫자는 다음과 같이 정의 합니다.
+
+조건 1. n의 다음 큰 숫자는 n보다 큰 자연수 입니다.
+조건 2. n의 다음 큰 숫자와 n은 2진수로 변환했을 때 1의 갯수가 같습니다.
+조건 3. n의 다음 큰 숫자는 조건 1, 2를 만족하는 수 중 가장 작은 수 입니다.
+예를 들어서 78(1001110)의 다음 큰 숫자는 83(1010011)입니다.
+
+자연수 n이 매개변수로 주어질 때, n의 다음 큰 숫자를 return 하는 solution 함수를 완성해주세요.
+
+제한 사항
+n은 1,000,000 이하의 자연수 입니다.
+입출력 예
+n	result
+78	83
+15	23
+입출력 예 설명
+입출력 예#1
+문제 예시와 같습니다.
+입출력 예#2
+15(1111)의 다음 큰 숫자는 23(10111)입니다.
+
+
+
+class Solution {
+    public int solution(int n) {
+        int answer = 0;
+        return answer;
+    }
+}
+
+
+
+https://programmers.co.kr/learn/courses/30/lessons/12911
+#########################################################################################
+
+
+
+
+답:
+
+
+
+
+
+
+class Solution {
+    public int solution(int n) {
+        int answer = 0;
+        
+        String str = Integer.toBinaryString(n);
+        int count = 0;
+        for(int i=0;i<str.length();i++) {
+        	if(str.charAt(i)=='1') {
+        		count++;
+        	}
+        }
+        
+       int nextCount = 0;
+       
+       while(true){
+    	   n++;
+    	   String nextStr = Integer.toBinaryString(n);
+    	   for(int i=0;i<nextStr.length();i++) {
+    		   if(nextStr.charAt(i)=='1') {
+    			   nextCount++;
+    		   }
+    	   }
+    	   
+    	   if(nextCount==count) {
+    		   answer = n;
+    		   break;
+    	   }
+    	   nextCount=0;
+       }
+        
+        
+        return answer;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################################
+예제63)연습문제
+
+1)올바른 괄호
+괄호가 바르게 짝지어졌다는 것은 '(' 문자로 열렸으면 반드시 짝지어서 ')' 문자로 닫혀야 한다는 뜻입니다. 예를 들어
+
+"()()" 또는 "(())()" 는 올바른 괄호입니다.
+")()(" 또는 "(()(" 는 올바르지 않은 괄호입니다.
+'(' 또는 ')' 로만 이루어진 문자열 s가 주어졌을 때, 문자열 s가 올바른 괄호이면 true를 return 하고, 올바르지 않은 괄호이면 false를 return 하는 solution 함수를 완성해 주세요.
+
+제한사항
+문자열 s의 길이 : 100,000 이하의 자연수
+문자열 s는 '(' 또는 ')' 로만 이루어져 있습니다.
+입출력 예
+s	answer
+"()()"	true
+"(())()"	true
+")()("	false
+"(()("	false
+입출력 예 설명
+입출력 예 #1,2,3,4
+문제의 예시와 같습니다.
+
+
+
+class Solution {
+    boolean solution(String s) {
+        boolean answer = true;
+
+        // [실행] 버튼을 누르면 출력 값을 볼 수 있습니다.
+        System.out.println("Hello Java");
+
+        return answer;
+    }
+}
+
+
+
+https://programmers.co.kr/learn/courses/30/lessons/12909
+#########################################################################################
+
+
+
+
+답:
+
+
+
+
+class Solution {
+    boolean solution(String s) {
+        boolean answer = true;
+        int count = 0;
+        for(int i=0;i<s.length();i++) {
+        	if(s.charAt(i) == '(') {
+        		count++;
+        	}else {
+        		if(count>0) {
+        			count--;
+        		}else {
+        			answer = false;
+        			break;
+        		}
+        	}
+        }
+        
+       if(count!=0) answer = false; 
+
+        return answer;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
