@@ -8749,3 +8749,1523 @@ class Solution {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+21.11.03_20회차
+===============================================================================
+*다양한유형문제(~스킬트리)
+===============================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################################
+예제73)Summer/Winter coding(~2018)
+1)영어 끝말잇기
+1부터 n까지 번호가 붙어있는 n명의 사람이 영어 끝말잇기를 하고 있습니다. 영어 끝말잇기는 다음과 같은 규칙으로 진행됩니다.
+
+1번부터 번호 순서대로 한 사람씩 차례대로 단어를 말합니다.
+마지막 사람이 단어를 말한 다음에는 다시 1번부터 시작합니다.
+앞사람이 말한 단어의 마지막 문자로 시작하는 단어를 말해야 합니다.
+이전에 등장했던 단어는 사용할 수 없습니다.
+한 글자인 단어는 인정되지 않습니다.
+다음은 3명이 끝말잇기를 하는 상황을 나타냅니다.
+
+tank → kick → know → wheel → land → dream → mother → robot → tank
+
+위 끝말잇기는 다음과 같이 진행됩니다.
+
+1번 사람이 자신의 첫 번째 차례에 tank를 말합니다.
+2번 사람이 자신의 첫 번째 차례에 kick을 말합니다.
+3번 사람이 자신의 첫 번째 차례에 know를 말합니다.
+1번 사람이 자신의 두 번째 차례에 wheel을 말합니다.
+(계속 진행)
+끝말잇기를 계속 진행해 나가다 보면, 3번 사람이 자신의 세 번째 차례에 말한 tank 라는 단어는 이전에 등장했던 단어이므로 탈락하게 됩니다.
+
+사람의 수 n과 사람들이 순서대로 말한 단어 words 가 매개변수로 주어질 때, 가장 먼저 탈락하는 사람의 번호와 그 사람이 자신의 몇 번째 차례에 탈락하는지를 구해서 return 하도록 solution 함수를 완성해주세요.
+
+제한 사항
+끝말잇기에 참여하는 사람의 수 n은 2 이상 10 이하의 자연수입니다.
+words는 끝말잇기에 사용한 단어들이 순서대로 들어있는 배열이며, 길이는 n 이상 100 이하입니다.
+단어의 길이는 2 이상 50 이하입니다.
+모든 단어는 알파벳 소문자로만 이루어져 있습니다.
+끝말잇기에 사용되는 단어의 뜻(의미)은 신경 쓰지 않으셔도 됩니다.
+정답은 [ 번호, 차례 ] 형태로 return 해주세요.
+만약 주어진 단어들로 탈락자가 생기지 않는다면, [0, 0]을 return 해주세요.
+입출력 예
+n	words	result
+3	["tank", "kick", "know", "wheel", "land", "dream", "mother", "robot", "tank"]	[3,3]
+5	["hello", "observe", "effect", "take", "either", "recognize", "encourage", "ensure", "establish", "hang", "gather", "refer", "reference", "estimate", "executive"]	[0,0]
+2	["hello", "one", "even", "never", "now", "world", "draw"]	[1,3]
+입출력 예 설명
+입출력 예 #1
+3명의 사람이 끝말잇기에 참여하고 있습니다.
+
+1번 사람 : tank, wheel, mother
+2번 사람 : kick, land, robot
+3번 사람 : know, dream, tank
+와 같은 순서로 말을 하게 되며, 3번 사람이 자신의 세 번째 차례에 말한 tank라는 단어가 1번 사람이 자신의 첫 번째 차례에 말한 tank와 같으므로 3번 사람이 자신의 세 번째 차례로 말을 할 때 처음 탈락자가 나오게 됩니다.
+
+입출력 예 #2
+5명의 사람이 끝말잇기에 참여하고 있습니다.
+
+1번 사람 : hello, recognize, gather
+2번 사람 : observe, encourage, refer
+3번 사람 : effect, ensure, reference
+4번 사람 : take, establish, estimate
+5번 사람 : either, hang, executive
+와 같은 순서로 말을 하게 되며, 이 경우는 주어진 단어로만으로는 탈락자가 발생하지 않습니다. 따라서 [0, 0]을 return하면 됩니다.
+
+입출력 예 #3
+2명의 사람이 끝말잇기에 참여하고 있습니다.
+
+1번 사람 : hello, even, now, draw
+2번 사람 : one, never, world
+와 같은 순서로 말을 하게 되며, 1번 사람이 자신의 세 번째 차례에 'r'로 시작하는 단어 대신, n으로 시작하는 now를 말했기 때문에 이때 처음 탈락자가 나오게 됩니다.
+
+
+
+
+class Solution {
+    public int[] solution(int n, String[] words) {
+        int[] answer = {};
+
+        // [실행] 버튼을 누르면 출력 값을 볼 수 있습니다. 
+        System.out.println("Hello Java");
+
+        return answer;
+    }
+}
+
+
+
+https://programmers.co.kr/learn/courses/30/lessons/12981
+#########################################################################################
+
+
+
+
+답:
+
+
+
+
+
+
+
+
+
+import java.util.*;
+
+class Solution {
+    public int[] solution(int n, String[] words) {
+        int[] answer = new int[] {0,0};
+
+        int idx = 0;
+        int cnt = 0;
+        
+        Map<String,Integer> hm = new HashMap<>();
+
+        int size = 0;
+        for(int i=0;i<words.length;i++) {
+        	hm.put(words[i], i);
+        	size++;
+        	if(hm.size()!=size) {
+        		idx = i;
+        		cnt = (idx / n)+1;
+        		answer = new int[]{i%n+1, cnt};
+        		return answer;
+        	}
+        	
+           	if(i<words.length-1&&words[i].charAt(words[i].length()-1) != words[i+1].charAt(0)) {
+        		idx = i+1;
+        		cnt = (idx / n)+1;
+        		answer = new int[]{(i+1)%n+1, cnt};
+        		return answer;
+        	}
+        }
+        
+  
+
+       
+        return answer;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################################
+예제74)Summer/Winter coding(~2018)
+
+1)점프와 순간 이동
+
+OO 연구소는 한 번에 K 칸을 앞으로 점프하거나, (현재까지 온 거리) x 2 에 해당하는 위치로 순간이동을 할 수 있는 특수한 기능을 가진 아이언 슈트를 개발하여 판매하고 있습니다. 이 아이언 슈트는 건전지로 작동되는데, 순간이동을 하면 건전지 사용량이 줄지 않지만, 앞으로 K 칸을 점프하면 K 만큼의 건전지 사용량이 듭니다. 그러므로 아이언 슈트를 착용하고 이동할 때는 순간 이동을 하는 것이 더 효율적입니다. 아이언 슈트 구매자는 아이언 슈트를 착용하고 거리가 N 만큼 떨어져 있는 장소로 가려고 합니다. 단, 건전지 사용량을 줄이기 위해 점프로 이동하는 것은 최소로 하려고 합니다. 아이언 슈트 구매자가 이동하려는 거리 N이 주어졌을 때, 사용해야 하는 건전지 사용량의 최솟값을 return하는 solution 함수를 만들어 주세요.
+
+예를 들어 거리가 5만큼 떨어져 있는 장소로 가려고 합니다.
+아이언 슈트를 입고 거리가 5만큼 떨어져 있는 장소로 갈 수 있는 경우의 수는 여러 가지입니다.
+
+처음 위치 0 에서 5 칸을 앞으로 점프하면 바로 도착하지만, 건전지 사용량이 5 만큼 듭니다.
+처음 위치 0 에서 2 칸을 앞으로 점프한 다음 순간이동 하면 (현재까지 온 거리 : 2) x 2에 해당하는 위치로 이동할 수 있으므로 위치 4로 이동합니다. 이때 1 칸을 앞으로 점프하면 도착하므로 건전지 사용량이 3 만큼 듭니다.
+처음 위치 0 에서 1 칸을 앞으로 점프한 다음 순간이동 하면 (현재까지 온 거리 : 1) x 2에 해당하는 위치로 이동할 수 있으므로 위치 2로 이동됩니다. 이때 다시 순간이동 하면 (현재까지 온 거리 : 2) x 2 만큼 이동할 수 있으므로 위치 4로 이동합니다. 이때 1 칸을 앞으로 점프하면 도착하므로 건전지 사용량이 2 만큼 듭니다.
+위의 3가지 경우 거리가 5만큼 떨어져 있는 장소로 가기 위해서 3번째 경우가 건전지 사용량이 가장 적으므로 답은 2가 됩니다.
+
+제한 사항
+숫자 N: 1 이상 10억 이하의 자연수
+숫자 K: 1 이상의 자연수
+입출력 예
+N	result
+5	2
+6	2
+5000	5
+입출력 예 설명
+입출력 예 #1
+위의 예시와 같습니다.
+
+입출력 예 #2
+처음 위치 0 에서 1 칸을 앞으로 점프한 다음 순간이동 하면 (현재까지 온 거리 : 1) x 2에 해당하는 위치로 이동할 수 있으므로 위치 2로 이동합니다. 이때 1 칸을 앞으로 점프하면 위치3으로 이동합니다. 이때 다시 순간이동 하면 (현재까지 온 거리 : 3) x 2 이동할 수 있으므로 위치 6에 도착합니다. 이 경우가 건전지 사용량이 가장 적으므로 2를 반환해주면 됩니다.
+
+입출력 예 #3
+위와 같은 방식으로 합니다.
+
+
+
+import java.util.*;
+
+public class Solution {
+    public int solution(int n) {
+        int ans = 0;
+
+        // [실행] 버튼을 누르면 출력 값을 볼 수 있습니다.
+        System.out.println("Hello Java");
+
+        return ans;
+    }
+}
+
+
+
+https://programmers.co.kr/learn/courses/30/lessons/12980
+#########################################################################################
+
+
+
+
+답:
+
+
+
+
+
+
+import java.util.*;
+
+public class Solution {
+    public int solution(int n) {
+        int ans = 0;
+        
+        while(n!=0) {
+        	if(n%2==0) {
+        		n/=2;
+        	}else {
+        		n -= 1;
+        		ans++;
+        	}
+        }
+        
+        
+
+        return ans;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################################
+예제75)Summer/Winter coding(~2018)
+
+1)스킬트리
+
+선행 스킬이란 어떤 스킬을 배우기 전에 먼저 배워야 하는 스킬을 뜻합니다.
+
+예를 들어 선행 스킬 순서가 스파크 → 라이트닝 볼트 → 썬더일때, 썬더를 배우려면 먼저 라이트닝 볼트를 배워야 하고, 라이트닝 볼트를 배우려면 먼저 스파크를 배워야 합니다.
+
+위 순서에 없는 다른 스킬(힐링 등)은 순서에 상관없이 배울 수 있습니다. 따라서 스파크 → 힐링 → 라이트닝 볼트 → 썬더와 같은 스킬트리는 가능하지만, 썬더 → 스파크나 라이트닝 볼트 → 스파크 → 힐링 → 썬더와 같은 스킬트리는 불가능합니다.
+
+선행 스킬 순서 skill과 유저들이 만든 스킬트리1를 담은 배열 skill_trees가 매개변수로 주어질 때, 가능한 스킬트리 개수를 return 하는 solution 함수를 작성해주세요.
+
+제한 조건
+스킬은 알파벳 대문자로 표기하며, 모든 문자열은 알파벳 대문자로만 이루어져 있습니다.
+스킬 순서와 스킬트리는 문자열로 표기합니다.
+예를 들어, C → B → D 라면 "CBD"로 표기합니다
+선행 스킬 순서 skill의 길이는 1 이상 26 이하이며, 스킬은 중복해 주어지지 않습니다.
+skill_trees는 길이 1 이상 20 이하인 배열입니다.
+skill_trees의 원소는 스킬을 나타내는 문자열입니다.
+skill_trees의 원소는 길이가 2 이상 26 이하인 문자열이며, 스킬이 중복해 주어지지 않습니다.
+입출력 예
+skill	skill_trees	return
+"CBD"	["BACDE", "CBADF", "AECB", "BDA"]	2
+입출력 예 설명
+"BACDE": B 스킬을 배우기 전에 C 스킬을 먼저 배워야 합니다. 불가능한 스킬트립니다.
+"CBADF": 가능한 스킬트리입니다.
+"AECB": 가능한 스킬트리입니다.
+"BDA": B 스킬을 배우기 전에 C 스킬을 먼저 배워야 합니다. 불가능한 스킬트리입니다.
+
+
+class Solution {
+    public int solution(String skill, String[] skill_trees) {
+        int answer = -1;
+        return answer;
+    }
+}
+
+
+
+
+https://programmers.co.kr/learn/courses/30/lessons/49993
+#########################################################################################
+
+
+
+
+답:
+
+
+import java.util.*;
+
+class Solution {
+    public int solution(String skill, String[] skill_trees) {
+        int answer = 0;
+        
+        
+        
+        Stack<Character> stack = new Stack<>();
+
+        
+        
+        
+        for(int i=0;i<skill_trees.length;i++) {
+        	stack.clear();
+            for(int i2=skill.length()-1;i2>=0;i2--) {
+            	stack.add(skill.charAt(i2));
+            }
+        	boolean check = true;
+        	for(int j=0;j<skill_trees[i].length();j++) {
+        		if(stack.contains(skill_trees[i].charAt(j))) {
+        			if(stack.peek()==skill_trees[i].charAt(j)) {
+        				stack.pop();
+        			}else {
+        				check = false;
+        				break;
+        			}
+        		}
+        	}
+        	
+        	if(check) {
+        		answer++;
+        	}
+        }
+        
+        return answer;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+21.11.04_21회차
+===============================================================================
+*다양한유형문제(~약수의 개수와 덧셈)
+===============================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################################
+예제76)Summer/Winter coding(~2018)
+
+1)방문 길이
+
+class Solution {
+    public int solution(String dirs) {
+        int answer = 0;
+        return answer;
+    }
+}
+
+
+
+https://programmers.co.kr/learn/courses/30/lessons/49994
+#########################################################################################
+
+
+
+
+답(HashSet만사용):
+
+
+
+import java.util.*;
+
+
+class Solution {
+    public int solution(String dirs) {
+        int answer = 0;
+        
+        Set<String> set = new HashSet<>();
+        
+        int x=0;
+        int y=0;
+        for(Character dir : dirs.toCharArray())
+        {	
+        	int lastX = x; 
+        	int lastY = y;
+        	
+        	if(dir == 'U' && y+1 <=5) y++;
+        	if(dir == 'D' && y-1 >= -5) y--;
+        	if(dir == 'R' && x+1 <= 5) x++;
+        	if(dir == 'L'&& x-1 >= -5) x--;
+        	
+        	if(lastX==x && lastY==y) {        		
+        		continue;
+        	}
+        	
+        	set.add(lastX+""+lastY+""+x+""+y);
+        	set.add(x+""+y+lastX+""+lastY);
+        }
+        
+        answer = set.size()/2;
+        
+        return answer;
+    }
+}
+
+
+
+
+
+답(HashSet+HashMap사용):
+
+
+import java.util.HashSet;
+import java.util.HashMap;
+
+class Solution {
+    public int solution(String dirs) {
+        int answer = 0;     
+        int x = 0, y = 0;
+        
+        HashSet<String> set = new HashSet<>();
+        HashMap<Character, int[]> map = new HashMap<>();
+        
+        map.put('U',new int[]{0,1});
+        map.put('D',new int[]{0,-1});
+        map.put('R',new int[]{1,0});
+        map.put('L',new int[]{-1,0});
+        
+        for(Character dir : dirs.toCharArray()){
+            int lastX = x, lastY = y;
+            
+            x += map.get(dir)[0];
+            y += map.get(dir)[1];
+            
+            if(x>5 || x<-5){
+                x -= map.get(dir)[0];
+                continue;
+            }
+            
+            if(y>5 || y<-5){
+                y -= map.get(dir)[1];
+                continue;
+            }
+                      
+            //양방향 다 넣어주기
+            set.add(lastX+""+lastY+""+x+""+y);
+            set.add(x+""+y+""+lastX+""+lastY);
+        }
+        
+        answer = set.size()/2;
+        return answer;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################################
+예제77)월간 코드 챌린지 시즌 1
+
+1)내적
+길이가 같은 두 1차원 정수 배열 a, b가 매개변수로 주어집니다. a와 b의 내적을 return 하도록 solution 함수를 완성해주세요.
+
+이때, a와 b의 내적은 a[0]*b[0] + a[1]*b[1] + ... + a[n-1]*b[n-1] 입니다. (n은 a, b의 길이)
+
+제한사항
+a, b의 길이는 1 이상 1,000 이하입니다.
+a, b의 모든 수는 -1,000 이상 1,000 이하입니다.
+입출력 예
+a	b	result
+[1,2,3,4]	[-3,-1,0,2]	3
+[-1,0,1]	[1,0,-1]	-2
+입출력 예 설명
+입출력 예 #1
+
+a와 b의 내적은 1*(-3) + 2*(-1) + 3*0 + 4*2 = 3 입니다.
+입출력 예 #2
+
+a와 b의 내적은 (-1)*1 + 0*0 + 1*(-1) = -2 입니다.
+
+
+class Solution {
+    public int solution(int[] a, int[] b) {
+        int answer = 1234567890;
+        return answer;
+    }
+}
+
+
+https://programmers.co.kr/learn/courses/30/lessons/70128
+#########################################################################################
+
+
+
+
+답:
+
+
+class Solution {
+    public int solution(int[] a, int[] b) {
+        
+        int sum =0;
+        for(int i=0;i<a.length;i++) {
+        	sum += a[i] * b[i];
+        }
+        
+        
+        return sum;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################################
+예제78)월간 코드 챌린지 시즌 1
+
+1)3진법 뒤집기
+
+자연수 n이 매개변수로 주어집니다. n을 3진법 상에서 앞뒤로 뒤집은 후, 이를 다시 10진법으로 표현한 수를 return 하도록 solution 함수를 완성해주세요.
+
+제한사항
+n은 1 이상 100,000,000 이하인 자연수입니다.
+입출력 예
+n	result
+45	7
+125	229
+입출력 예 설명
+입출력 예 #1
+
+답을 도출하는 과정은 다음과 같습니다.
+n (10진법)	n (3진법)	앞뒤 반전(3진법)	10진법으로 표현
+45	1200	0021	7
+따라서 7을 return 해야 합니다.
+입출력 예 #2
+
+답을 도출하는 과정은 다음과 같습니다.
+n (10진법)	n (3진법)	앞뒤 반전(3진법)	10진법으로 표현
+125	11122	22111	229
+따라서 229를 return 해야 합니다.
+
+
+class Solution {
+    public int solution(int n) {
+        int answer = 0;
+        return answer;
+    }
+}
+
+
+https://programmers.co.kr/learn/courses/30/lessons/68935
+#########################################################################################
+
+
+
+
+답:
+
+
+
+
+
+
+
+
+
+
+class Solution {
+    public int solution(int n) {
+        int answer = 0;
+        
+
+        
+        String strTmp = "";
+        
+        
+        while(n>0) {
+        	strTmp = n % 3 + strTmp;
+        	n /= 3;        		
+        }
+
+        StringBuilder sb = new StringBuilder(strTmp);
+        
+        sb.reverse();
+        
+        
+        answer = Integer.parseInt(sb.toString(), 3);
+        
+        
+        
+        
+        return answer;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################################
+예제79)월간 코드 챌린지 시즌 1
+
+1)두 개 뽑아서 더하기
+
+정수 배열 numbers가 주어집니다. numbers에서 서로 다른 인덱스에 있는 두 개의 수를 뽑아 더해서 만들 수 있는 모든 수를 배열에 오름차순으로 담아 return 하도록 solution 함수를 완성해주세요.
+
+제한사항
+numbers의 길이는 2 이상 100 이하입니다.
+numbers의 모든 수는 0 이상 100 이하입니다.
+입출력 예
+numbers	result
+[2,1,3,4,1]	[2,3,4,5,6,7]
+[5,0,2,7]	[2,5,7,9,12]
+입출력 예 설명
+입출력 예 #1
+
+2 = 1 + 1 입니다. (1이 numbers에 두 개 있습니다.)
+3 = 2 + 1 입니다.
+4 = 1 + 3 입니다.
+5 = 1 + 4 = 2 + 3 입니다.
+6 = 2 + 4 입니다.
+7 = 3 + 4 입니다.
+따라서 [2,3,4,5,6,7] 을 return 해야 합니다.
+입출력 예 #2
+
+2 = 0 + 2 입니다.
+5 = 5 + 0 입니다.
+7 = 0 + 7 = 5 + 2 입니다.
+9 = 2 + 7 입니다.
+12 = 5 + 7 입니다.
+따라서 [2,5,7,9,12] 를 return 해야 합니다.
+
+
+
+class Solution {
+    public int[] solution(int[] numbers) {
+        int[] answer = {};
+        return answer;
+    }
+}
+
+
+https://programmers.co.kr/learn/courses/30/lessons/68644
+#########################################################################################
+
+
+
+
+답:
+
+
+
+
+
+import java.util.*;
+
+class Solution {
+    public int[] solution(int[] numbers) {
+        
+        
+        
+        Set<Integer> set = new HashSet<>();
+        
+        for(int i=0;i<numbers.length-1;i++) {
+        	for(int j=i+1;j<numbers.length;j++) {
+        		set.add(numbers[i]+numbers[j]);        		
+        	}
+        }
+        
+        int[] answer = new int[set.size()];
+        
+        
+        int i =0;
+        for(int num : set) {
+        	answer[i] = num;
+        	i++;
+        }
+        
+        Arrays.sort(answer);
+        
+        return answer;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################################
+예제80)월간 코드 챌린지 시즌 1
+
+1)이진 변환 반복하기
+
+0과 1로 이루어진 어떤 문자열 x에 대한 이진 변환을 다음과 같이 정의합니다.
+
+x의 모든 0을 제거합니다.
+x의 길이를 c라고 하면, x를 "c를 2진법으로 표현한 문자열"로 바꿉니다.
+예를 들어, x = "0111010"이라면, x에 이진 변환을 가하면 x = "0111010" -> "1111" -> "100" 이 됩니다.
+
+0과 1로 이루어진 문자열 s가 매개변수로 주어집니다. s가 "1"이 될 때까지 계속해서 s에 이진 변환을 가했을 때, 이진 변환의 횟수와 변환 과정에서 제거된 모든 0의 개수를 각각 배열에 담아 return 하도록 solution 함수를 완성해주세요.
+
+제한사항
+s의 길이는 1 이상 150,000 이하입니다.
+s에는 '1'이 최소 하나 이상 포함되어 있습니다.
+입출력 예
+s	result
+"110010101001"	[3,8]
+"01110"	[3,3]
+"1111111"	[4,1]
+입출력 예 설명
+입출력 예 #1
+
+"110010101001"이 "1"이 될 때까지 이진 변환을 가하는 과정은 다음과 같습니다.
+회차	이진 변환 이전	제거할 0의 개수	0 제거 후 길이	이진 변환 결과
+1	"110010101001"	6	6	"110"
+2	"110"	1	2	"10"
+3	"10"	1	1	"1"
+3번의 이진 변환을 하는 동안 8개의 0을 제거했으므로, [3,8]을 return 해야 합니다.
+입출력 예 #2
+
+"01110"이 "1"이 될 때까지 이진 변환을 가하는 과정은 다음과 같습니다.
+회차	이진 변환 이전	제거할 0의 개수	0 제거 후 길이	이진 변환 결과
+1	"01110"	2	3	"11"
+2	"11"	0	2	"10"
+3	"10"	1	1	"1"
+3번의 이진 변환을 하는 동안 3개의 0을 제거했으므로, [3,3]을 return 해야 합니다.
+입출력 예 #3
+
+"1111111"이 "1"이 될 때까지 이진 변환을 가하는 과정은 다음과 같습니다.
+회차	이진 변환 이전	제거할 0의 개수	0 제거 후 길이	이진 변환 결과
+1	"1111111"	0	7	"111"
+2	"111"	0	3	"11"
+3	"11"	0	2	"10"
+4	"10"	1	1	"1"
+4번의 이진 변환을 하는 동안 1개의 0을 제거했으므로, [4,1]을 return 해야 합니다.
+
+
+
+class Solution {
+    public int[] solution(String s) {
+        int[] answer = {};
+        return answer;
+    }
+}
+
+
+
+https://programmers.co.kr/learn/courses/30/lessons/70129
+#########################################################################################
+
+
+
+
+답:
+
+
+
+
+
+
+
+
+class Solution {
+    public int[] solution(String s) {
+        int[] answer = new int[2];
+        
+       while(s.length()>1) {
+    	   int countOne=0;
+    	   for(int i=0;i<s.length();i++) {
+    		   if(s.charAt(i)=='0') {
+    			   answer[1]++;
+    		   }else {
+    			   countOne++;
+    		   }
+    	   }
+    	   
+    	   s = Integer.toBinaryString(countOne);
+    	   answer[0]++;
+       }
+        
+        	
+        return answer;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################################
+예제81)월간 코드 챌린지 시즌 2
+
+1)음양 더하기
+
+어떤 정수들이 있습니다. 이 정수들의 절댓값을 차례대로 담은 정수 배열 absolutes와 이 정수들의 부호를 차례대로 담은 불리언 배열 signs가 매개변수로 주어집니다. 실제 정수들의 합을 구하여 return 하도록 solution 함수를 완성해주세요.
+
+제한사항
+absolutes의 길이는 1 이상 1,000 이하입니다.
+absolutes의 모든 수는 각각 1 이상 1,000 이하입니다.
+signs의 길이는 absolutes의 길이와 같습니다.
+signs[i] 가 참이면 absolutes[i] 의 실제 정수가 양수임을, 그렇지 않으면 음수임을 의미합니다.
+입출력 예
+absolutes	signs	result
+[4,7,12]	[true,false,true]	9
+[1,2,3]	[false,false,true]	0
+입출력 예 설명
+입출력 예 #1
+
+signs가 [true,false,true] 이므로, 실제 수들의 값은 각각 4, -7, 12입니다.
+따라서 세 수의 합인 9를 return 해야 합니다.
+입출력 예 #2
+
+signs가 [false,false,true] 이므로, 실제 수들의 값은 각각 -1, -2, 3입니다.
+따라서 세 수의 합인 0을 return 해야 합니다.
+
+
+class Solution {
+    public int solution(int[] absolutes, boolean[] signs) {
+        int answer = 123456789;
+        return answer;
+    }
+}
+
+
+https://programmers.co.kr/learn/courses/30/lessons/76501
+#########################################################################################
+
+
+
+
+답:
+
+
+
+class Solution {
+    public int solution(int[] absolutes, boolean[] signs) {
+        int answer = 123456789;
+        
+        int sum = 0;
+        for(int i=0;i<absolutes.length;i++) {
+        	if(!signs[i]) absolutes[i] *= (-1);
+        	
+        	sum += absolutes[i];
+        }
+        
+        return sum;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################################
+예제82)월간 코드 챌린지 시즌 2
+
+1)약수의 개수와 덧셈
+
+두 정수 left와 right가 매개변수로 주어집니다. left부터 right까지의 모든 수들 중에서, 약수의 개수가 짝수인 수는 더하고, 약수의 개수가 홀수인 수는 뺀 수를 return 하도록 solution 함수를 완성해주세요.
+
+제한사항
+1 ≤ left ≤ right ≤ 1,000
+입출력 예
+left	right	result
+13	17	43
+24	27	52
+입출력 예 설명
+입출력 예 #1
+
+다음 표는 13부터 17까지의 수들의 약수를 모두 나타낸 것입니다.
+수	약수	약수의 개수
+13	1, 13	2
+14	1, 2, 7, 14	4
+15	1, 3, 5, 15	4
+16	1, 2, 4, 8, 16	5
+17	1, 17	2
+따라서, 13 + 14 + 15 - 16 + 17 = 43을 return 해야 합니다.
+입출력 예 #2
+
+다음 표는 24부터 27까지의 수들의 약수를 모두 나타낸 것입니다.
+수	약수	약수의 개수
+24	1, 2, 3, 4, 6, 8, 12, 24	8
+25	1, 5, 25	3
+26	1, 2, 13, 26	4
+27	1, 3, 9, 27	4
+따라서, 24 - 25 + 26 + 27 = 52를 return 해야 합니다.
+
+class Solution {
+    public int solution(int left, int right) {
+        int answer = 0;
+        return answer;
+    }
+}
+
+https://programmers.co.kr/learn/courses/30/lessons/77884
+#########################################################################################
+
+
+
+
+답:
+
+
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    public int solution(int left, int right) {
+        int answer = 0;
+        int count = 0;
+        
+        List<Integer> list = new ArrayList<>();
+        
+        for(int i=left; i<=right;i++) {
+        	list.add(i);
+        }
+        
+        for(int i=0; i<list.size();i++) {
+        	count = 0;
+        	for(int j=1;j<=list.get(i);j++) {
+        		if(list.get(i)%j==0) {
+        			count++;
+        		}
+        	}
+        	
+        	if(count % 2 != 0) list.set(i, list.get(i) * -1);
+        }
+        
+        System.out.println(list.toString());
+        
+        for(int i=0;i<list.size();i++) {
+        	answer += list.get(i);
+        }
+        
+        return answer;
+    }
+}
+
+
+
+다른 분 답:
+class Solution {
+    public int solution(int left, int right) {
+        int answer = 0;
+
+        for (int i=left;i<=right;i++) {
+            //제곱수인 경우 약수의 개수가 홀수
+            if (i % Math.sqrt(i) == 0) {
+                answer -= i;
+            }
+            //제곱수가 아닌 경우 약수의 개수가 짝수
+            else {
+                answer += i;
+            }
+        }
+
+        return answer;
+    }
+}
+
+
+
